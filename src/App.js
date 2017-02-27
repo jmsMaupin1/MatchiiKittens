@@ -7,19 +7,27 @@ import OrangeKitty from '../img/kitty-orange.png';
 import PlumKitty from '../img/kitty-plum.png';
 import Puppy from '../img/puppy.png';
 
+let uniqueCards = [
+  {image: BlueKitty, selected: false, visible: true},
+  {image: PurpleKitty, selected: false, visible: true},
+  {image: OrangeKitty, selected: false, visible: true},
+  {image: PlumKitty, selected: false, visible: true}
+];
+
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {arrayOfCards: [
-      {image: BlueKitty, selected: false, visible: true},
-      {image: PurpleKitty, selected: false, visible: true},
-      {image: OrangeKitty, selected: false, visible: true},
-      {image: PlumKitty, selected: false, visible: true},
-      {image: BlueKitty, selected: false, visible: true},
-      {image: PurpleKitty, selected: false, visible: true},
-      {image: OrangeKitty, selected: false, visible: true},
-      {image: PlumKitty, selected: false, visible: true}
-    ]}
+    let arrayOfCards = [];
+    uniqueCards.forEach(card => {
+      let copy = {
+        image: card.image,
+        selected: card.selected,
+        visible: card.visible
+      };
+      arrayOfCards.push(card);
+      arrayOfCards.push(copy);
+    });
+    this.state = {arrayOfCards};
   }
 
   flipCard(index, callback) {
@@ -83,10 +91,10 @@ class App extends Component {
               }, 1000);
             }
           })
-          
+
         }
       }
-    });    
+    });
   }
 
   render() {
