@@ -20,3 +20,13 @@ body {
 	background-size: contain;
 	background-repeat: no-repeat;
 }
+
+.win-message {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 75px;
+  color: white;
+  text-transform: uppercase;
+  height: 100vh;
+  line-height: 100vh;
+  vertical-align: middle;
+}

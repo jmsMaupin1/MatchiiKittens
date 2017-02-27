@@ -7,19 +7,41 @@ import OrangeKitty from '../img/kitty-orange.png';
 import PlumKitty from '../img/kitty-plum.png';
 import Puppy from '../img/puppy.png';
 
+let uniqueCards = [
+  {image: BlueKitty, selected: false, visible: true},
+  {image: PurpleKitty, selected: false, visible: true},
+  {image: OrangeKitty, selected: false, visible: true},
+  {image: PlumKitty, selected: false, visible: true},
+  {image: Puppy, selected: false, visible: true}
+];
+
+// credit: http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {arrayOfCards: [
-      {image: BlueKitty, selected: false, visible: true},
-      {image: PurpleKitty, selected: false, visible: true},
-      {image: OrangeKitty, selected: false, visible: true},
-      {image: PlumKitty, selected: false, visible: true},
-      {image: BlueKitty, selected: false, visible: true},
-      {image: PurpleKitty, selected: false, visible: true},
-      {image: OrangeKitty, selected: false, visible: true},
-      {image: PlumKitty, selected: false, visible: true}
-    ]}
+    let arrayOfCards = [];
+    let hasWon = false;
+    uniqueCards.forEach(card => {
+      let copy = {
+        image: card.image,
+        selected: card.selected,
+        visible: card.visible
+      };
+      arrayOfCards.push(card);
+      arrayOfCards.push(copy);
+    });
+    arrayOfCards = shuffleArray(arrayOfCards);
+    this.state = {arrayOfCards, hasWon};
   }
 
   flipCard(index, callback) {
@@ -79,18 +101,19 @@ class App extends Component {
               setTimeout(() => {
                 this.hideCard(index);
                 if(this.countVisibleCards()===0)
-                  console.log("YOU WIN");
+                  this.setState({hasWon: true});
               }, 1000);
             }
           })
-          
+
         }
       }
-    });    
+    });
   }
 
   render() {
     var self = this;
+    var winMessage = this.state.hasWon ? <div className="win-message">You Win! :)</div> : null;
     return (
       <div className="App">
         {
@@ -98,6 +121,7 @@ class App extends Component {
             return (<MatchiiCard key={index} index={index} onClick={self.handleClick.bind(self)} card={card} />)
           })
         }
+        {winMessage}
       </div>
     );
   }
