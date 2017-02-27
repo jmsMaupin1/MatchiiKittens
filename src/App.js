@@ -11,7 +11,8 @@ let uniqueCards = [
   {image: BlueKitty, selected: false, visible: true},
   {image: PurpleKitty, selected: false, visible: true},
   {image: OrangeKitty, selected: false, visible: true},
-  {image: PlumKitty, selected: false, visible: true}
+  {image: PlumKitty, selected: false, visible: true},
+  {image: Puppy, selected: false, visible: true}
 ];
 
 class App extends Component {
