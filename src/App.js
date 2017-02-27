@@ -30,6 +30,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     let arrayOfCards = [];
+    let hasWon = false;
     uniqueCards.forEach(card => {
       let copy = {
         image: card.image,
@@ -40,7 +41,7 @@ class App extends Component {
       arrayOfCards.push(copy);
     });
     arrayOfCards = shuffleArray(arrayOfCards);
-    this.state = {arrayOfCards};
+    this.state = {arrayOfCards, hasWon};
   }
 
   flipCard(index, callback) {
@@ -100,7 +101,7 @@ class App extends Component {
               setTimeout(() => {
                 this.hideCard(index);
                 if(this.countVisibleCards()===0)
-                  console.log("YOU WIN");
+                  this.setState({hasWon: true});
               }, 1000);
             }
           })
@@ -112,6 +113,7 @@ class App extends Component {
 
   render() {
     var self = this;
+    var winMessage = this.state.hasWon ? <div className="win-message">You Win! :)</div> : null;
     return (
       <div className="App">
         {
@@ -119,6 +121,7 @@ class App extends Component {
             return (<MatchiiCard key={index} index={index} onClick={self.handleClick.bind(self)} card={card} />)
           })
         }
+        {winMessage}
       </div>
     );
   }
